@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Old
+requirements.in
+src/Model_Jian_LI/old/
