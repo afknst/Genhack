@@ -131,3 +131,4 @@ dmypy.json
 # Old
 requirements.in
 src/Model_Jian_LI/old/
+src/Model_Jian_LI/new/
