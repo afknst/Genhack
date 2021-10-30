@@ -16,7 +16,6 @@ GUILD = "Lbitrik"
 
 def samples(clf=CLF, size=N, rng=RNG):
     clf.set_params(random_state=rng)
-    rng = np.random.default_rng(rng)
     _G, _ = clf.sample(size)
     _G += NOISE
     _G = np.maximum(_G, 1e-6)
