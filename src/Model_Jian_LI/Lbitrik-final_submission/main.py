@@ -14,5 +14,5 @@ NOISE = np.genfromtxt('noise.csv', delimiter=",")
 G = Model(NOISE, THETA)
 
 if __name__ == '__main__':
-    SAMPLES = G.sample(size=410)
+    SAMPLES = G.sample(size=408)
     np.savetxt("generated_samples.csv", SAMPLES, delimiter=",")

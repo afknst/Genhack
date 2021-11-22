@@ -5,10 +5,6 @@ from scipy.stats import ks_2samp
 D = 4
 
 
-def norm(_m1, _m2):
-    return (_m1 / 2 + _m2 / 20) / 2
-
-
 def get_rng(Z):
     _sha = sha256(Z.tobytes())
     return int(_sha.hexdigest(), 16) % 2**23
@@ -85,7 +81,7 @@ class Model:
         _m1 = np.mean([_W(_) for _ in range(D)])
         _m2 = np.mean(np.abs(self.Z - _Z(a)))
 
-        return norm(_m1, _m2)
+        return _m1, _m2
 
     def random_choice(self, a, size):
         _ind = self.RNG.integers(len(a), size=size)
@@ -98,21 +94,21 @@ class Model:
         _G = _G[~np.any(_G >= self.EPS[1], axis=1)]
         return self.random_choice(_G, self.SIZE)
 
-    def S1_better(self, _J0, steps=233):
+    def S1_better(self, _J0, steps=233, _method=0):
         for _ in range(steps):
             _G1 = self.S1()
-            _J1 = self.score(_G1)
+            _J1 = self.score(_G1)[_method]
             if _J1 < _J0:
                 return _G1, _J1
         return None
 
-    def MC(self, _th=7):
+    def MC(self, _th=7, _method=0):
         _G0 = self.S1()
-        _J0 = self.score(_G0)
+        _J0 = self.score(_G0)[_method]
         _i = 0
         while True:
             print(_J0)
-            _NEW = self.S1_better(_J0)
+            _NEW = self.S1_better(_J0, _method=_method)
             if _NEW is not None:
                 _G0, _J0 = _NEW
                 _i = 0
